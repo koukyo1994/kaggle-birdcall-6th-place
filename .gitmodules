@@ -1,0 +1,3 @@
+[submodule "streamlit-audio"]
+	path = streamlit-audio
+	url = https://github.com/koukyo1994/streamlit-audio

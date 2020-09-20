@@ -139,3 +139,6 @@ events.out.tfevent*
 *.npy
 *.ipynb
 output
+
+# editor
+.vscode

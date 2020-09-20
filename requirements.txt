@@ -1,0 +1,10 @@
+catalyst==20.6
+colorednoise==1.1.1
+efficientnet-pytorch==0.6.3
+iterative-stratification==0.1.6
+librosa==0.7.2
+numpy==1.19.0
+pandas==1.0.5
+torch==1.4
+torchlibrosa==0.0.4
+torchvision==0.5.0

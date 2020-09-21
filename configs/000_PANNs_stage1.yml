@@ -1,0 +1,90 @@
+globals:
+  seed: 1213
+  device: cuda
+  num_epochs: 55
+  output_dir: output/000_PANNs_stage1
+  main_metric: epoch_mAP
+  minimize_metric: False
+  input_key: waveform
+  input_target_key: targets
+  weights:
+  folds:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+
+data:
+  train_skip: input/birdsong-recognition/skipped.txt
+  train_df_path: input/birdsong-recognition/train.csv
+  train_audio_path: input/birdsong-recognition/train_audio_resampled
+
+dataset:
+  name: PANNsMultiLabelDataset
+  params:
+    train:
+      period: 30
+    valid:
+      period: 30
+
+transforms:
+  train:
+    - name: NoiseInjection
+      params:
+        max_noise_level: 0.04
+    - name: PitchShift
+      params:
+        max_range: 3
+    - name: RandomVolume
+      params:
+        limit: 4
+  valid:
+
+loss:
+  name: ImprovedPANNsLoss
+  params:
+    output_key: clipwise_output
+    weights:
+      - 1.0
+      - 0.5
+
+optimizer:
+  name: Adam
+  params:
+    lr: 0.001
+
+scheduler:
+  name: CosineAnnealingLR
+  params:
+    T_max: 10
+
+split:
+  name: StratifiedKFold
+  params:
+    n_splits: 5
+    random_state: 42
+    shuffle: True
+
+model:
+  name: PANNsCNN14Att
+  params:
+    pretrained: True
+    n_classes: 264
+
+loader:
+  train:
+    batch_size: 32
+    shuffle: True
+    num_workers: 12
+  valid:
+    batch_size: 64
+    shuffle: False
+    num_workers: 12
+
+callbacks:
+  - name: mAPCallback
+    params:
+      input_key: targets
+      output_key: logits
+      prefix: mAP

@@ -1,0 +1,35 @@
+globals:
+  seed: 1213
+  device: cuda
+  output_dir: output/sed/000_Stage1
+  save_path: PANNsAtt_sed.csv
+  weights:
+    0: output/000_PANNs_stage1/fold0/checkpoints/best.pth
+    1: output/000_PANNs_stage1/fold1/checkpoints/best.pth
+    2: output/000_PANNs_stage1/fold2/checkpoints/best.pth
+    3: output/000_PANNs_stage1/fold3/checkpoints/best.pth
+    4: output/000_PANNs_stage1/fold4/checkpoints/best.pth
+  folds:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+
+data:
+  train_skip: input/birdsong-recognition/skipped.txt
+  train_df_path: input/birdsong-recognition/train.csv
+  train_audio_path: input/birdsong-recognition/train_audio_resampled
+
+split:
+  name: StratifiedKFold
+  params:
+    n_splits: 5
+    random_state: 42
+    shuffle: True
+
+model:
+  name: PANNsCNN14Att
+  params:
+    pretrained: True
+    n_classes: 264

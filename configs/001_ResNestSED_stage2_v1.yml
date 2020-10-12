@@ -2,7 +2,7 @@ globals:
   seed: 1213
   device: cuda
   num_epochs: 75
-  output_dir: output/001_ResNestSED_stage2
+  output_dir: output/001_ResNestSED_stage2_v1
   main_metric: epoch_mAP
   minimize_metric: False
   input_key: image

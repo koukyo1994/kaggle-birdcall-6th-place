@@ -1,0 +1,49 @@
+globals:
+  seed: 1213
+  device: cuda
+  output_dir: input/birdsong-recognition/soft_labels
+  weights:
+    0: output/001_ResNestSED_stage2_v1/fold0/checkpoints/best.pth
+    1: output/001_ResNestSED_stage2_v1/fold1/checkpoints/best.pth
+    2: output/001_ResNestSED_stage2_v1/fold2/checkpoints/best.pth
+    3: output/001_ResNestSED_stage2_v1/fold3/checkpoints/best.pth
+    4: output/001_ResNestSED_stage2_v1/fold4/checkpoints/best.pth
+  folds:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+
+data:
+  train_skip: input/birdsong-recognition/skipped.txt
+  train_df_path: input/birdsong-recognition/train.csv
+  train_audio_path: input/birdsong-recognition/train_audio_resampled
+
+split:
+  name: StratifiedKFold
+  params:
+    n_splits: 5
+    random_state: 42
+    shuffle: True
+
+model:
+  name: ResNestSED
+  params:
+    base_model_name: resnest50_fast_1s1x64d
+    pretrained: True
+    num_classes: 264
+
+dataset:
+  name: ChannelsSedDataset
+  period: 5
+  melspectrogram_parameters:
+    n_mels: 128
+    fmin: 20
+    fmax: 16000
+  pcen_parameters:
+    gain: 0.98
+    bias: 2
+    power: 0.5
+    time_constant: 0.4
+    eps: 0.000001

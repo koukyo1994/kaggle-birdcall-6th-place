@@ -102,5 +102,5 @@ if __name__ == "__main__":
                 found_ = [dataset.INV_BIRD_CODE[i] for i in found_]
                 additional_labels_extended[wav_name] = found_
 
-    with open(output_dir / "additional_labels_extended.json", "w") as f:
+    with open(output_dir.parent / "additional_labels_extended.json", "w") as f:
         json.dump(additional_labels_extended, f)

@@ -44,16 +44,16 @@ train-stage2-v2-ext:
 	CUDA_VISIBLE_DEVICES=0 python sed_soft.py --config configs/sed/004_Stage2_sed_extended_v2.yml
 
 train-stage3-no-ext:
-	CUDA_VISIBLE_DEVICES=0 python train.py --config configs/003_ResNestSED_EMA_stage3_v1.yml
-	CUDA_VISIBLE_DEVICES=0 python train.py --config configs/004_ResNestSED_EMA_th04_stage3_v1.yml
-	CUDA_VISIBLE_DEVICES=0 python train.py --config configs/005_ResNestSED_EMA_th06_stage3_v1.yml
-	CUDA_VISIBLE_DEVICES=0 python train.py --config configs/006_ResNestSED_EMA_stage3_v2.yml
-	CUDA_VISIBLE_DEVICES=0 python train.py --config configs/007_ResNestSED_EMA_th03_stage3_v2.yml
-	CUDA_VISIBLE_DEVICES=0 python train.py --config configs/008_ResNestSED_EMA_th04_stage3_v2.yml
-	CUDA_VISIBLE_DEVICES=0 python train.py --config configs/009_ResNestSED_EMA_th06_stage3_v2.yml
-	CUDA_VISIBLE_DEVICES=0 python train.py --config configs/010_ResNestSED_EMA_th07_stage3_v2.yml
-	CUDA_VISIBLE_DEVICES=0 python train.py --config configs/012_EfficientNetSED_EMA_stage3_v2.yml
-	CUDA_VISIBLE_DEVICES=0 python train.py --config configs/013_EfficientNetSED_EMA_th04_stage3_v2.yml
+	CUDA_VISIBLE_DEVICES=0 python ema.py --config configs/003_ResNestSED_EMA_stage3_v1.yml
+	CUDA_VISIBLE_DEVICES=0 python ema.py --config configs/004_ResNestSED_EMA_th04_stage3_v1.yml
+	CUDA_VISIBLE_DEVICES=0 python ema.py --config configs/005_ResNestSED_EMA_th06_stage3_v1.yml
+	CUDA_VISIBLE_DEVICES=0 python ema.py --config configs/006_ResNestSED_EMA_stage3_v2.yml
+	CUDA_VISIBLE_DEVICES=0 python ema.py --config configs/007_ResNestSED_EMA_th03_stage3_v2.yml
+	CUDA_VISIBLE_DEVICES=0 python ema.py --config configs/008_ResNestSED_EMA_th04_stage3_v2.yml
+	CUDA_VISIBLE_DEVICES=0 python ema.py --config configs/009_ResNestSED_EMA_th06_stage3_v2.yml
+	CUDA_VISIBLE_DEVICES=0 python ema.py --config configs/010_ResNestSED_EMA_th07_stage3_v2.yml
+	CUDA_VISIBLE_DEVICES=0 python ema.py --config configs/012_EfficientNetSED_EMA_stage3_v2.yml
+	CUDA_VISIBLE_DEVICES=0 python ema.py --config configs/013_EfficientNetSED_EMA_th04_stage3_v2.yml
 
 train-stage3-ext:
-	CUDA_VISIBLE_DEVICES=0 python train.py --config configs/011_ResNestSED_EMA_ext_stage3_v2.yml
+	CUDA_VISIBLE_DEVICES=0 python ema.py --config configs/011_ResNestSED_EMA_ext_stage3_v2.yml

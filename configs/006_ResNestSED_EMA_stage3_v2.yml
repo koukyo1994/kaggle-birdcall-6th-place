@@ -3,6 +3,7 @@ globals:
   device: cuda
   num_epochs: 75
   output_dir: output/006_ResNestSED_EMA_stage3_v2
+  main_metric: sample_f1
   input_key: image
   input_target_key: targets
   weights:

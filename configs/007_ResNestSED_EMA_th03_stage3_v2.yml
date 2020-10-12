@@ -1,0 +1,100 @@
+globals:
+  seed: 1213
+  device: cuda
+  num_epochs: 75
+  output_dir: output/007_ResNestSED_EMA_th03_stage3_v2
+  input_key: image
+  input_target_key: targets
+  weights:
+  folds:
+    - 0
+
+data:
+  train_skip: input/birdsong-recognition/skipped.txt
+  train_df_path: input/birdsong-recognition/train.csv
+  train_audio_path: input/birdsong-recognition/train_audio_resampled
+  additional_labels: input/birdsong-recognition/additional_labels.json
+
+dataset:
+  name: LabelCorrectionDataset
+  img_size: 224
+  params:
+    melspectrogram_parameters:
+      n_mels: 128
+      fmin: 20
+      fmax: 16000
+    pcen_parameters:
+      gain: 0.98
+      bias: 2
+      power: 0.5
+      time_constant: 0.4
+      eps: 0.000001
+    period:
+      train: 20
+      valid: 30
+    n_segments:
+      train: 69
+      valid: 103
+    soft_label_dir: input/birdsong-recognition/soft_labels2
+    threshold: 0.3
+
+transforms:
+  train:
+    - name: NoiseInjection
+      params:
+        max_noise_level: 0.04
+        always_apply: False
+    - name: PitchShift
+      params:
+        max_range: 3
+        always_apply: False
+    - name: RandomVolume
+      params:
+        limit: 4
+        always_apply: False
+    - name: Normalize
+  valid:
+    - name: Normalize
+
+loss:
+  name: ImprovedPANNsLoss
+  params:
+    output_key: "clipwise_output"
+    weights:
+      - 1.0
+      - 0.5
+
+optimizer:
+  name: Adam
+  params:
+    lr: 0.001
+
+scheduler:
+  name: CosineAnnealingLR
+  params:
+    T_max: 10
+
+split:
+  name: StratifiedKFold
+  params:
+    n_splits: 5
+    random_state: 42
+    shuffle: True
+
+model:
+  name: ResNestSED
+  params:
+    base_model_name: resnest50_fast_1s1x64d
+    pretrained: True
+    num_classes: 264
+
+loader:
+  train:
+    batch_size: 24
+    shuffle: True
+    num_workers: 16
+
+callbacks:
+  mu: 0.9
+  level: batch
+  n: 10
